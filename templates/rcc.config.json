@@ -1,0 +1,10 @@
+{
+    "compiler": {
+        "type": "roblox-py", 
+        "version": "0.13.1"
+    }, 
+
+    "include": [
+        "@roblox/roact"
+    ]
+}
