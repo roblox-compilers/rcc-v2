@@ -1,1 +1,2 @@
-# rcc-v2
+# rcc rewritten
+being worked on by @lawmixer
