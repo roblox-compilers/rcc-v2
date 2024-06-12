@@ -22,7 +22,9 @@ jobs:
             latest: true
             fileName: "lune-*-linux-x86_64.zip"
       - name: Extract Lune
-        run: unzip ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} -d ./
+        run: | 
+          unzip ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} -d ./
+          rm -f ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} 
       - name: Build
         run: |
           mkdir ./build
@@ -40,7 +42,7 @@ jobs:
                 ../lune build -t $os-$arch ../rcc.luau -o "./rcc$extension"
                 mkdir ../out/$os-$arch/
                 outdir="../out/$os-$arch/"
-                exclude=(".github" ".vscode" "lune.exe" "rcc.luau" "LICENSE" "CHANGELOG.md" "out" "build")
+                exclude=(".github" ".vscode" "lune.exe" "rcc.luau" "LICENSE" "CHANGELOG.md" "out" "build" "lune" ".gitignore")
                 for file in ../*; do
                     if [[ ! " ${exclude[@]} " =~ " $(basename "$file") " ]]; then
                         cp -r "$file" "$outdir"
