@@ -30,11 +30,14 @@ jobs:
           cd ./build
           for os in linux macos windows; do
             for arch in x86_64 aarch64; do
-              echo "Building for $os-$arch"
-              ../lune build -t $os-$arch ../rcc.luau
-              mkdir ../out/$os-$arch/
-              cp -r ./ ../out/$os-$arch/
-              rm -rf ./*
+              if [$os != "windows"] || [$arch != "aarch64"] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
+              then
+                echo "Building for $os-$arch"
+                ../lune build -t $os-$arch ../rcc.luau
+                mkdir ../out/$os-$arch/
+                cp -r ./ ../out/$os-$arch/
+                rm -rf ./*
+              fi
             done
           done
           cd ..
@@ -69,12 +72,6 @@ jobs:
         with:
           name: rcc-windows-x86_64
           path: ./out/windows-x86_64/
-      
-      - name: Upload windows-aarch64 build
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: rcc-windows-aarch64
-          path: ./out/windows-aarch64/
 
 
 
