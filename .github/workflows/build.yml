@@ -30,7 +30,7 @@ jobs:
           mkdir ./build
           mkdir ./out
           cd ./build
-          alias lune=../lune
+          alias lune="../lune"
           for os in linux macos windows; do
             for arch in x86_64 aarch64; do
               echo "Building for $os-$arch"
