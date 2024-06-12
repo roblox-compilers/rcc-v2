@@ -33,9 +33,13 @@ jobs:
               if [[ "$os" != "windows" ]] || [[ "$arch" != "aarch64" ]] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
               then
                 echo "Building for $os-$arch"
-                ../lune build -t $os-$arch ../rcc.luau
+                export extension=""
+                if [[ "$os" == "windows" ]]; then
+                  export extension=".exe"
+                fi
+                ../lune build -t $os-$arch ../rcc.luau -o "./rcc$extension"
                 mkdir ../out/$os-$arch/
-                cp -r ./ ../out/$os-$arch/
+                mv "./rcc$extension" ../out/$os-$arch/
                 rm -rf ./*
               fi
             done
@@ -48,30 +52,35 @@ jobs:
         with:
           name: rcc-linux-x86_64
           path: ./out/linux-x86_64/
+          if-no-files-found: error
       
       - name: Upload linux-aarch64 build
         uses: actions/upload-artifact@v4.3.3
         with:
           name: rcc-linux-aarch64
           path: ./out/linux-aarch64/
-      
+          if-no-files-found: error
+          
       - name: Upload macos-x86_64 build
         uses: actions/upload-artifact@v4.3.3
         with:
           name: rcc-macos-x86_64
           path: ./out/macos-x86_64/
+          if-no-files-found: error
       
       - name: Upload macos-aarch64 build
         uses: actions/upload-artifact@v4.3.3
         with:
           name: rcc-macos-aarch64
           path: ./out/macos-aarch64/
+          if-no-files-found: error
       
       - name: Upload windows-x86_64 build
         uses: actions/upload-artifact@v4.3.3
         with:
           name: rcc-windows-x86_64
           path: ./out/windows-x86_64/
+          if-no-files-found: error
 
 
 
