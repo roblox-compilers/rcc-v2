@@ -1,0 +1,95 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Lune
+        uses: robinraju/release-downloader@v1.10
+        id: get_lune
+        with:
+            repository: lune-org/lune
+            latest: true
+            fileName: "lune-*-linux-x86_64.zip"
+      - name: Extract Lune
+        run: | 
+          unzip ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} -d ./
+          rm -f ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} 
+      - name: Build
+        run: |
+          mkdir ./build
+          mkdir ./out
+          cd ./build
+          for os in linux macos windows; do
+            for arch in x86_64 aarch64; do
+              if [[ "$os" != "windows" ]] || [[ "$arch" != "aarch64" ]] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
+              then
+                echo "Building for $os-$arch"
+                extension=""
+                if [[ "$os" == "windows" ]]; then
+                  extension=".exe"
+                fi
+                ../lune build -t $os-$arch ../rcc.luau -o "./rcc$extension"
+                mkdir ../out/$os-$arch/
+                outdir="../out/$os-$arch/"
+                exclude=(".github" ".vscode" "lune.exe" "rcc.luau" "LICENSE" "CHANGELOG.md" "out" "build" "lune")
+                for file in ../*; do
+                    if [[ ! " ${exclude[@]} " =~ " $(basename "$file") " ]]; then
+                        cp -r "$file" "$outdir"
+                    fi
+                done
+                mv "./rcc$extension" "$outdir"
+                rm -rf ./*
+              fi
+            done
+          done
+          cd ..
+      
+      # This is about to get repetitive (thanks github for a useless action)
+      - name: Upload linux-x86_64 build
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: rcc-linux-x86_64
+          path: ./out/linux-x86_64/
+          if-no-files-found: error
+      
+      - name: Upload linux-aarch64 build
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: rcc-linux-aarch64
+          path: ./out/linux-aarch64/
+          if-no-files-found: error
+          
+      - name: Upload macos-x86_64 build
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: rcc-macos-x86_64
+          path: ./out/macos-x86_64/
+          if-no-files-found: error
+      
+      - name: Upload macos-aarch64 build
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: rcc-macos-aarch64
+          path: ./out/macos-aarch64/
+          if-no-files-found: error
+      
+      - name: Upload windows-x86_64 build
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: rcc-windows-x86_64
+          path: ./out/windows-x86_64/
+          if-no-files-found: error
+
+
+
