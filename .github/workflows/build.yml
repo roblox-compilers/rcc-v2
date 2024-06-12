@@ -40,10 +40,9 @@ jobs:
                 ../lune build -t $os-$arch ../rcc.luau -o "./rcc$extension"
                 mkdir ../out/$os-$arch/
                 outdir="../out/$os-$arch/"
-                exclude=(".github", ".vscode", "lune.exe", "rcc.luau", "LICENSE", "CHANGELOG.md", "out", "build")
+                exclude=(".github" ".vscode" "lune.exe" "rcc.luau" "LICENSE" "CHANGELOG.md" "out" "build")
                 for file in ../*; do
                     if [[ ! " ${exclude[@]} " =~ " $(basename "$file") " ]]; then
-                        echo $(basename "$file")
                         cp -r "$file" "$outdir"
                     fi
                 done
