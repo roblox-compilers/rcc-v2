@@ -33,13 +33,20 @@ jobs:
               if [[ "$os" != "windows" ]] || [[ "$arch" != "aarch64" ]] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
               then
                 echo "Building for $os-$arch"
-                export extension=""
+                extension=""
                 if [[ "$os" == "windows" ]]; then
-                  export extension=".exe"
+                  extension=".exe"
                 fi
                 ../lune build -t $os-$arch ../rcc.luau -o "./rcc$extension"
                 mkdir ../out/$os-$arch/
-                mv "./rcc$extension" ../out/$os-$arch/
+                outdir="../out/$os-$arch/"
+                exclude=(".github" ".vscode" "lune.exe" "rcc.luau" "LICENSE" "CHANGELOG.md" "out" "build")
+                for file in ../*; do
+                    if [[ ! " ${exclude[@]} " =~ " $(basename "$file") " ]]; then
+                        cp -r "$file" "$outdir"
+                    fi
+                done
+                mv "./rcc$extension" "$outdir"
                 rm -rf ./*
               fi
             done
