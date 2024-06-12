@@ -43,6 +43,7 @@ jobs:
                 exclude=(".github", ".vscode", "lune.exe", "rcc.luau", "LICENSE", "CHANGELOG.md", "out", "build")
                 for file in ../*; do
                     if [[ ! " ${exclude[@]} " =~ " $(basename "$file") " ]]; then
+                        echo $(basename "$file")
                         cp -r "$file" "$outdir"
                     fi
                 done
