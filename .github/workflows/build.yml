@@ -33,7 +33,7 @@ jobs:
               echo "Building for $os-$arch"
               ../lune build -t $os-$arch ../rcc.luau
               mkdir ../out/$os-$arch/
-              cp -r ./* ../out/$os-$arch/
+              cp -r ./ ../out/$os-$arch/
               rm -rf ./*
             done
           done
