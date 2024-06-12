@@ -30,7 +30,7 @@ jobs:
           cd ./build
           for os in linux macos windows; do
             for arch in x86_64 aarch64; do
-              if [$os != "windows"] || [$arch != "aarch64"] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
+              if ["$os" != "windows"] || ["$arch" != "aarch64"] # Quick way to exclude aarch64 from windows. Would need refactor for any other exclusions
               then
                 echo "Building for $os-$arch"
                 ../lune build -t $os-$arch ../rcc.luau
