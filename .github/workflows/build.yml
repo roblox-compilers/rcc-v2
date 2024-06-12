@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Build
 
 on:
@@ -33,9 +31,9 @@ jobs:
           for os in linux macos windows; do
             for arch in x86_64 aarch64; do
               echo "Building for $os-$arch"
-              ../lune build -t $os-$arch ../rcc.luau -o 
+              ../lune build -t $os-$arch ../rcc.luau
               mkdir ../out/$os-$arch/
-              cp -r ../out/$os-$arch/ ./*
+              cp -r ./ ../out/$os-$arch/
               rm -rf ./*
             done
           done
