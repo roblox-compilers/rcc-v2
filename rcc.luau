@@ -8,4 +8,5 @@ if command == "help" then
 	help_command()
 else
     print(`Command not found: {command}`)
+    process.exit(1)
 end
