@@ -1,24 +1,25 @@
-local stdio = require("@lune/stdio")
-local b = stdio.style("bold") -- Yes I know the variable name is shortened, but in the context of this command, it's fine.
-local re = stdio.style("reset")
-local r = stdio.color("red")
+local color = require("@root/libraries/color")
+local help_message = [[
+    usage: {red}rcc{re} [command] [options]
+    {b}Commands:{re}
+      {b}help{re}\t\topen this help menu
+      {st}{b}init{re}{st}\t\tinitialize a project{re} 
+      {st}{b}install{re}{st}\t\tinstall a compiler{re}
+      {st}{b}uninstall{re}{st}\t\tuninstall a compiler{re}
+      {st}{b}update{re}{st}\t\tupdate a compiler{re}
+    {b}Options:{re}
+      {b}-o{re}{st}\t\toutput directory (default: out){re}
+      {b}<none>{re}{st}\t\tinput directory (default: src){re}
+      {b}-d{re}{st}\t\tdebug mode{re}
+    {b}Examples:{re}
+      {st}{b}rcc{re}{st} {b}install{re}{st} roblox-py{re}
+      {st}{b}rcc{re}{st} {b}uninstall{re}{st} roblox-py{re}
+      {st}{b}rcc{re}{st} {b}update{re}{st} roblox-py{re}
+      {st}{b}rcc{re}{st} {b}-o{re}{st} out{re}
+      {st}{b}rcc{re}{st} {b}-o{re}{st} out src{re}
+      {st}{b}rcc{re}{st} {b}include{re}{st} @roblox/roact{re}
+    ]]
+help_message = color.color(help_message):gsub("\\t", "\t") -- Apparently escape codes don't work in multiline strings
 return function()
-    print(`usage: {r}rcc{re} [command] [options]`)
-    print(`{b}Commands:{re}`)
-    print(`  {b}help{re}\t\topen this help menu`)
-    --print(`  {bold}init{reset}\t\tinitialize a project`)
-    --print(`  {b}install{re}\tinstall a compiler`)
-    --print(`  {b}uninstall{re}\tuninstall a compiler`)
-    --print(`  {b}update{re}\tupdate a compiler`)
-    print(`{b}Options:{re}`)
-    --print(`  {b}-o{re}\t\toutput directory (default: out)`)
-    --print(`  {b}<none>{re}\tinput directory (default: src)`)
-    --print(`  {b}-d{re}\t\tdebug mode`)
-    print(`{b}Examples:{re}`)
-    --print(`  {b}rcc{re} {b}install{re} roblox-py`)
-    --print(`  {b}rcc{re} {b}uninstall{re} roblox-py`)
-    --print(`  {b}rcc{re} {b}update{re} roblox-py`)
-    --print(`  {b}rcc{re} {b}-o{re} out`)
-    --print(`  {b}rcc{re} {b}-o{re} out src`)
-    --print(`  {b}rcc{re} {b}include{re} @roblox/roact`)
+    print(help_message)
 end
