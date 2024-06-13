@@ -1,4 +1,4 @@
-local color = require("@root/libraries/color")
+local alsi = require("@root/libraries/ansi")
 local help_message = [[
     usage: {red}rcc{re} [command] [options]
     {b}Commands:{re}
@@ -19,7 +19,7 @@ local help_message = [[
       {st}{b}rcc{re}{st} {b}-o{re}{st} out src{re}
       {st}{b}rcc{re}{st} {b}include{re}{st} @roblox/roact{re}
     ]]
-help_message = color.color(help_message):gsub("\\t", "\t") -- Apparently escape codes don't work in multiline strings
+help_message = ansi.replace(help_message):gsub("\\t", "\t") -- Apparently escape codes don't work in multiline strings
 return function()
     print(help_message)
 end

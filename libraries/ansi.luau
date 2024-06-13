@@ -17,7 +17,7 @@ module.replacements = {
     ["{black}"] = stdio.color("black"),
 }
 
-function module.color(input:string)
+function module.replace(input:string)
     for k, v in pairs(module.replacements) do
         input = input:gsub(k, v)
     end
