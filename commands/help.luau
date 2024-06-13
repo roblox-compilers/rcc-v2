@@ -1,4 +1,4 @@
-local alsi = require("@root/libraries/ansi")
+local ansi = require("@libraries/ansi")
 local help_message = [[
     usage: {red}rcc{re} [command] [options]
     {b}Commands:{re}
