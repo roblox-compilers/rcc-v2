@@ -3,7 +3,6 @@
   "luau-lsp.require.directoryAliases": {
     "@lune/": "~/.lune/.typedefs/0.8.5/",
     "@root": ".",
-    "@libraries": "./libraries",
     "@commands": "./commands",
   }
 }
