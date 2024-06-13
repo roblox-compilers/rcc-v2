@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Lune
+        uses: robinraju/release-downloader@v1.10
+        id: get_lune
+        with:
+            repository: lune-org/lune
+            latest: true
+            fileName: "lune-*-linux-x86_64.zip"
+      - name: Extract Lune
+        run: | 
+          unzip ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} -d ./
+          rm -f ${{ fromJson(steps.get_lune.outputs.downloaded_files)[0] }} 
+      - name: Test running script
+        run: ./lune run rcc.luau help
