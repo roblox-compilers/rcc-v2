@@ -1,6 +1,7 @@
 {
     "aliases": {
         "root": "./",
-        "commands": "./commands"
+        "commands": "./commands",
+        "libraries": "./libraries"
     }
 }

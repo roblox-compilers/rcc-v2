@@ -4,5 +4,6 @@
     "@lune/": "~/.lune/.typedefs/0.8.5/",
     "@root": ".",
     "@commands": "./commands",
+    "@libraries": "./libraries",
   }
 }
