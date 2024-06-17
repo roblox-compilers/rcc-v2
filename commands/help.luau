@@ -21,4 +21,4 @@ return function()
     --print(`  {b}rcc{re} {b}-o{re} out`)
     --print(`  {b}rcc{re} {b}-o{re} out src`)
     --print(`  {b}rcc{re} {b}include{re} @roblox/roact`)
-end
+  end
