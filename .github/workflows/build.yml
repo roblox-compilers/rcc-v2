@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "stable", "unstable" ]
   pull_request:
-    branches: [ "main" ]
+    types: [ "review_requested", "opened" ]
 
   workflow_dispatch:
 
