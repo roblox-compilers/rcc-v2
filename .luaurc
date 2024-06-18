@@ -1,7 +1,8 @@
 {
     "aliases": {
         "root": "./",
-        "commands": "./commands",
-        "libraries": "./libraries"
+        "src": "./src",
+        "commands": "./src/commands",
+        "libraries": "./src/libraries"
     }
 }
