@@ -2,7 +2,7 @@
     "aliases": {
         "root": "./",
         "src": "./src",
-        "commands": "./src/commands",
+        "commands": "./src/commands/",
         "libraries": "./src/libraries"
     }
 }

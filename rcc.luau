@@ -1,11 +1,13 @@
 local process = require("@lune/process")
-
-local help_command = require("@commands/help")
+local fs = require("@lune/fs")
 
 local command = process.args[1]
--- Could just run the module of the same name in commands but that might not be clean
-if command == "help" then
-	help_command()
-else
-    print(`Command not found: {command}`)
-end
+
+for _, entry in fs.readDir("./src/commands") do
+    local prefix_cmd = entry:split(".")[1]
+
+    -- print(command, prefix_cmd)
+    if command == prefix_cmd then 
+        require(`@commands/{prefix_cmd}`)()
+    end
+end 
